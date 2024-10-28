@@ -174,13 +174,26 @@ INSERT INTO Permisos (nombre_permiso, tipo_permiso, descripcion) VALUES ('Actual
 INSERT INTO Permisos (nombre_permiso, tipo_permiso, descripcion) VALUES ('Acceso Completo al Sistema', 'acceso_completo', 'Permite acceso total a todas las funcionalidades del sistema.');
 
 
+
+
 -- Insertar datos en la tabla Usuarios
-INSERT INTO Usuarios (username, password, id_personal) VALUES ('jlopez', 'password123', 1); -- Personal ID 1
-INSERT INTO Usuarios (username, password, id_personal) VALUES ('mgarcia', 'securePass456', 2); -- Personal ID 2
-INSERT INTO Usuarios (username, password, id_personal) VALUES ('fhernandez', 'mypassword789', 3); -- Personal ID 3
-INSERT INTO Usuarios (username, password, id_personal) VALUES ('arivera', 'adminPass321', 4); -- Personal ID 4
-INSERT INTO Usuarios (username, password, id_personal) VALUES ('srodriguez', 'qwerty987', 5); -- Personal ID 5
-INSERT INTO Usuarios (username, password, id_personal) VALUES ('clopez', 'welcome2024', 6); -- Personal ID 6
+INSERT INTO Usuarios (username, password, id_persona) VALUES ('jlopez', 'password123', 1); -- Personal ID 1
+INSERT INTO Usuarios (username, password, id_persona) VALUES ('mgarcia', 'securePass456', 2); -- Personal ID 2
+INSERT INTO Usuarios (username, password, id_persona) VALUES ('fhernandez', 'mypassword789', 3); -- Personal ID 3
+INSERT INTO Usuarios (username, password, id_persona) VALUES ('arivera', 'adminPass321', 4); -- Personal ID 4
+INSERT INTO Usuarios (username, password, id_persona) VALUES ('srodriguez', 'qwerty987', 5); -- Personal ID 5
+INSERT INTO Usuarios (username, password, id_persona) VALUES ('clopez', 'welcome2024', 6); -- Personal ID 6
+
+
+INSERT INTO Roles (nombre_rol, descripcion) VALUES 
+('SuperUsuario', 'Tiene acceso total al sistema, incluyendo la administración de usuarios y permisos'),
+('Administrador', 'Gestiona las operaciones del hospital, incluyendo la administración de personal y recursos'),
+('Doctor', 'Médico encargado de la atención y tratamiento de los pacientes'),
+('Enfermero', 'Responsable de la atención básica de los pacientes bajo la supervisión de los doctores'),
+('Recepcionista', 'Gestiona la recepción de pacientes y la organización de citas'),
+('Farmacéutico', 'Encargado de la distribución y control de los medicamentos'),
+('Paciente', 'Acceso limitado al sistema para revisar su historial médico y agendar citas'),
+('Técnico de laboratorio', 'Encargado de realizar análisis clínicos y entregar resultados a los doctores');
 
 -- Doctor
 INSERT INTO roles_permisos (id_rol, id_permiso) VALUES (1, 1); -- Ver pacientes
@@ -221,3 +234,15 @@ INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (3, 3); -- fhernandez com
 INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (4, 4); -- arivera como Recepcionista
 INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (5, 5); -- srodriguez como SuperUsuario
 INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (6, 2); -- clopez como Enfermera
+
+
+
+INSERT INTO Usuarios (username, password, id_persona) 
+VALUES ('paatrick09', '1009', 16);
+
+INSERT INTO Usuarios (username, password, id_persona) 
+VALUES ('gabs', '1406', 17);
+
+
+INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (15, 7); 
+INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (11, 1);

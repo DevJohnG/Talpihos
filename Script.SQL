@@ -308,8 +308,8 @@ CREATE TABLE Usuarios (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) UNIQUE,
     password VARCHAR(255),
-    id_personal INT, -- Vincula el usuario con el empleado
-    FOREIGN KEY (id_personal) REFERENCES Personal(id_personal)
+    id_persona INT, -- Vincula el usuario con el empleado
+    FOREIGN KEY (id_persona) REFERENCES persona(id_persona)
 );
 
 CREATE TABLE Roles (

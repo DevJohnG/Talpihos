@@ -1,6 +1,18 @@
 <?php
-// Asegúrate de que la ruta sea correcta
-require_once 'core/App.php';
+require_once 'controllers/LoginController.php';
 
-// Crear una instancia de la clase App para iniciar la aplicación
-$app = new App();
+$controller = $_GET['controller'] ?? 'LoginController';
+$action = $_GET['action'] ?? 'login';
+
+if (class_exists($controller)) {
+    $controllerInstance = new $controller();
+    if (method_exists($controllerInstance, $action)) {
+        $controllerInstance->$action();
+    } else {
+        echo "Acción no encontrada.";
+    }
+} else {
+    echo "Controlador no encontrado.";
+}
+?>
+
