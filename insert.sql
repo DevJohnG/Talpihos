@@ -41,14 +41,7 @@ INSERT INTO Corregimientos (corregimiento, id_distrito) VALUES ('Las Tablas', 6)
 INSERT INTO Corregimientos (corregimiento, id_distrito) VALUES ('La Palma', 9);
 INSERT INTO Corregimientos (corregimiento, id_distrito) VALUES ('Changuinola', 8);
 
--- Insertar edificios en los corregimientos
-INSERT INTO Edificios (nombre_edificio, id_corregimiento) VALUES ('Edificio Panamá', 1);
-INSERT INTO Edificios (nombre_edificio, id_corregimiento) VALUES ('Torre Colón', 2);
-INSERT INTO Edificios (nombre_edificio, id_corregimiento) VALUES ('Complejo Chiriquí', 3);
-INSERT INTO Edificios (nombre_edificio, id_corregimiento) VALUES ('Centro Comercial Albrook', 1);
-INSERT INTO Edificios (nombre_edificio, id_corregimiento) VALUES ('Plaza 5 de Mayo', 1);
-INSERT INTO Edificios (nombre_edificio, id_corregimiento) VALUES ('Edificio Santa Rosa', 5);
-INSERT INTO Edificios (nombre_edificio, id_corregimiento) VALUES ('Torre de Hospital', 9);
+
 
 -- Insertar direcciones en los corregimientos y edificios
 INSERT INTO Direcciones (calle, noCasa, id_corregimiento, id_edificio) VALUES ('Calle 50', 'Apt. 101', 1, 1);
@@ -177,12 +170,15 @@ INSERT INTO Permisos (nombre_permiso, tipo_permiso, descripcion) VALUES ('Acceso
 
 
 -- Insertar datos en la tabla Usuarios
-INSERT INTO Usuarios (username, password, id_persona) VALUES ('jlopez', 'password123', 1); -- Personal ID 1
-INSERT INTO Usuarios (username, password, id_persona) VALUES ('mgarcia', 'securePass456', 2); -- Personal ID 2
-INSERT INTO Usuarios (username, password, id_persona) VALUES ('fhernandez', 'mypassword789', 3); -- Personal ID 3
-INSERT INTO Usuarios (username, password, id_persona) VALUES ('arivera', 'adminPass321', 4); -- Personal ID 4
-INSERT INTO Usuarios (username, password, id_persona) VALUES ('srodriguez', 'qwerty987', 5); -- Personal ID 5
-INSERT INTO Usuarios (username, password, id_persona) VALUES ('clopez', 'welcome2024', 6); -- Personal ID 6
+INSERT INTO Usuarios (username, password, cedula) VALUES ('juan.perez', 'password1', '8-123-4567');
+INSERT INTO Usuarios (username, password, cedula) VALUES ('maria.gomez', 'password2', '8-234-5678');
+INSERT INTO Usuarios (username, password, cedula) VALUES ('luis.martinez', 'password3', '8-345-6789');
+INSERT INTO Usuarios (username, password, cedula) VALUES ('ana.rodriguez', 'password4', '8-456-7890');
+INSERT INTO Usuarios (username, password, cedula) VALUES ('carlos.lopez', 'password5', '8-567-8901');
+INSERT INTO Usuarios (username, password, cedula) VALUES ('laura.fernandez', 'password6', '8-678-9012');
+INSERT INTO Usuarios (username, password, cedula) VALUES ('andres.torres', 'password7', '8-789-0123');
+INSERT INTO Usuarios (username, password, cedula) VALUES ('clara.sanchez', 'password8', '8-890-1234');
+
 
 
 INSERT INTO Roles (nombre_rol, descripcion) VALUES 
@@ -228,16 +224,19 @@ INSERT INTO roles_permisos (id_rol, id_permiso) VALUES (5, 7); -- Editar inventa
 
 
 -- Asignar roles a usuarios existentes
-INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (1, 1); -- jlopez como Doctor
-INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (2, 2); -- mgarcia como Enfermera
-INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (3, 3); -- fhernandez como Administrador
-INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (4, 4); -- arivera como Recepcionista
-INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (5, 5); -- srodriguez como SuperUsuario
-INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (6, 2); -- clopez como Enfermera
+INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (1, 1); -- Juan Pérez es SuperUsuario
+INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (2, 2); -- María Gómez es Administrador
+INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (3, 3); -- Luis Martínez es Doctor
+INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (4, 4); -- Ana Rodríguez es Enfermero
+INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (5, 5); -- Carlos López es Recepcionista
+INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (6, 6); -- Laura Fernández es Farmacéutico
+INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (7, 7); -- Andrés Torres es Paciente
+INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (8, 8); -- Clara Sánchez es Técnico de laboratorio
 
 
 
-INSERT INTO Usuarios (username, password, id_persona) 
+
+INSERT INTO Usuarios (username, password, cedula) 
 VALUES ('paatrick09', '1009', 16);
 
 INSERT INTO Usuarios (username, password, id_persona) 

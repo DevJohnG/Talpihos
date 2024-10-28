@@ -1,6 +1,6 @@
 <?php
 
-require_once 'entities/Usuario.php';
+require_once 'entities/usuario.php';
 
 class LoginController {
     public function login() {
@@ -16,14 +16,22 @@ class LoginController {
                 $_SESSION['usuario_id'] = $usuario['id_usuario'];
                 $_SESSION['rol'] = $usuario['nombre_rol'];
             
-                // Agregar un mensaje de depuración
+                
                 echo "Rol del usuario: " . $_SESSION['rol']; // Muestra el rol recuperado
             
                 // Redirigir según el rol
                 if ($usuario['nombre_rol'] === 'SuperUsuario') {
                     header("Location: /views/admin_dashboard.php");
+
                 } elseif ($usuario['nombre_rol'] === 'Paciente') {
                     header("Location: /views/perfil.php");
+
+                } elseif ($usuario['nombre_rol'] === 'Doctor') {
+                    header("Location: /views/doctor_dashboard.php");
+               
+                } elseif ($usuario['nombre_rol'] === 'Recepcionista') {
+                    header("Location: /views/recepcionista_dashboard.php");
+
                 } else {
                     echo "No tienes permisos para acceder a esta área.";
                 }
@@ -33,7 +41,24 @@ class LoginController {
             }
         }    
     }
+    public function logout() {
+        // Iniciar la sesión si no está iniciada
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Destruir todas las variables de sesión
+        session_unset();
+
+        // Destruir la sesión
+        session_destroy();
+
+        // Redirigir al usuario a la página de inicio de sesión
+        header("Location: /views/login.php");
+        exit();
+    }
 }
+
 
 
 

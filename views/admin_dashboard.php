@@ -129,7 +129,8 @@
         <div class="container">
             <div class="header-content">
                 <h1>Panel de Administración</h1>
-                <button class="logout-btn">Cerrar Sesión</button>
+                <button class="logout-btn" a href="../controllers=LoginController&action=logout">Cerrar Sesión</button>
+
             </div>
         </div>
     </header>
@@ -154,7 +155,7 @@
                         </svg>
                         Agregar Especialidad
                     </a>
-                    <a href="agregar-roles.html" class="dashboard-item">
+                    <a href="nuevo_rol.php" class="dashboard-item">
                         <svg class="dashboard-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                             <circle cx="8.5" cy="7" r="4"></circle>
@@ -182,11 +183,36 @@
                         </svg>
                         Registrar Personas
                     </a>
-                    <a href="registrar-pacientes.html" class="dashboard-item">
+                    <a href="registro_paciente.php" class="dashboard-item">
                         <svg class="dashboard-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
                         </svg>
                         Registrar Pacientes
+                    </a>
+                    <a href="agregar-doctor.html" class="dashboard-item">
+                        <svg class="dashboard-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                        Agregar Doctor
+                    </a>
+                    <a href="registrar_personal.php" class="dashboard-item">
+                        <svg class="dashboard-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Agregar Personal
+                    </a>
+                    <a href="pre-registros.html" class="dashboard-item">
+                        <svg class="dashboard-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="12" y1="18" x2="12" y2="12"></line>
+                            <line x1="9" y1="15" x2="15" y2="15"></line>
+                        </svg>
+                        Pre-registros
                     </a>
                 </div>
             </div>
@@ -200,6 +226,3 @@
     </footer>
 </body>
 </html>
-
-
-

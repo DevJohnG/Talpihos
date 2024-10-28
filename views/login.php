@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio de Sesión Elegante</title>
+    <title>Inicio de Sesión</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -105,8 +105,8 @@
                 <input type="password" id="password" name="password" required>
             </div>
             <button type="submit" class="login-btn">Iniciar Sesión</button>
-            <button type="button" class="pre-register-btn">Pre-registro</button>
-        </form>
+            <button type="button" class="pre-register-btn" onclick="window.location.href='pre_registro.php'">Pre-registro</button>
+            </form>
         <div class="forgot-password">
             <a href="#">¿Olvidaste tu contraseña?</a>
         </div>

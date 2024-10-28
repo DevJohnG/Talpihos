@@ -142,20 +142,20 @@ CREATE TABLE Persona(
 CREATE TABLE Correos (
     id_correo INT AUTO_INCREMENT PRIMARY KEY,
     correo_electronico VARCHAR(100) UNIQUE,
-    cedula  VARCHAR(50),
+    cedula INT,
     FOREIGN KEY (cedula) REFERENCES Persona(cedula)
 );
 
 
 CREATE TABLE Personal (
     id_personal INT AUTO_INCREMENT PRIMARY KEY,
-    
+        
     /* FOREIGN KEYS */
-    cedula VARCHAR(50),
+    cedula INT NOT NULL,
     id_especialidad INT,
     id_cargo INT,
-    id_jornada_laboral INT,
     
+    id_jornada_laboral INT,
     FOREIGN KEY (id_especialidad) REFERENCES Especialidades(id_especialidad) ON DELETE SET NULL,
     FOREIGN KEY (id_cargo) REFERENCES Cargos(id_cargo) ON DELETE SET NULL,
     FOREIGN KEY (cedula) REFERENCES Persona(cedula) ON DELETE CASCADE,
@@ -167,10 +167,9 @@ CREATE TABLE Pacientes (
     id_paciente INT AUTO_INCREMENT PRIMARY KEY,
 
     /* FOREIGN KEYS */
-    cedula  VARCHAR(50),
-    id_tipo_sangre INT,
+    cedula INT NOT NULL,
+    id_tipo_sangre varchar(20),
     FOREIGN KEY (cedula) REFERENCES Persona(cedula) ON DELETE CASCADE,
-    FOREIGN KEY (id_tipo_sangre) REFERENCES TiposDeSangre(id_tipo_sangre) ON DELETE SET NULL
 );
 
 
@@ -331,7 +330,7 @@ CREATE TABLE Usuarios (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) UNIQUE,
     password VARCHAR(255),
-    cedula  VARCHAR(50),
+    cedula INT, -- Vincula el usuario con el empleado
     FOREIGN KEY (cedula) REFERENCES persona(cedula)
 );
 
@@ -356,6 +355,3 @@ CREATE TABLE usuarios_roles (
     FOREIGN KEY (id_rol) REFERENCES Roles(id_rol),
     PRIMARY KEY (id_usuario, id_rol)
 );
-
-
-
