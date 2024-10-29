@@ -102,7 +102,7 @@ $jornadas = $jornadas_query->fetchAll(PDO::FETCH_ASSOC);
 <label for="cedula">Cédula:</label>
     <input type="text" name="cedula" required>
 
-    <label for="id_especialidad">Cargo:</label>
+    <label for="id_especialidad">Especialidad:</label>
     <select name="id_especialidad" required>
         <option value="">Seleccione una especialidad</option>
         <?php foreach ($especialidades as $especialidad): ?>

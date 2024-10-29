@@ -53,7 +53,7 @@ CREATE TABLE Departamentos(
 CREATE TABLE Cargos (
     id_cargo INT AUTO_INCREMENT PRIMARY KEY,
     nombre_cargo VARCHAR(100) NOT NULL,
-    descripcion_cargo VARCHAR(200)
+    descripcion_cargo VARCHAR(200),
 );
 
 CREATE TABLE Cargos_Departamentos(
@@ -76,6 +76,9 @@ CREATE TABLE Sub_Especialidades(
     id_subEspecialidad INT AUTO_INCREMENT PRIMARY KEY,
     nombre_subEspecialidad VARCHAR(100), -- Ej: cardiología intervencionista
     descripcion_subEspecialidad VARCHAR(100)
+    id_area_medica INT,
+
+    FOREIGN KEY (id_area_medica) REFERENCES areas_medicas(id_area_medica) ON DELETE SET NULL;
 );
 
 CREATE TABLE Areas_Medicas(
@@ -88,8 +91,7 @@ CREATE TABLE Especialidades (
     id_especialidad INT AUTO_INCREMENT PRIMARY KEY,
     nombre_especialidad VARCHAR(100) NOT NULL, -- Ej: cardiología
     descripcion_especialidad VARCHAR(200),
-    
-
+ 
     /* FOREIGN KEYS */
     id_subEspecialidad INT,
     id_area_medica INT,
@@ -129,14 +131,14 @@ CREATE TABLE PreRegistro (
 );
 
 CREATE TABLE Persona(
-    id_persona INT AUTO_INCREMENT,
+    id_persona INT UNIQUE AUTO_INCREMENT,
     cedula  VARCHAR(50) PRIMARY KEY NOT NULL,
     nombre VARCHAR(100) NOT NULL,
     apellido VARCHAR(100) NOT NULL,
     fecha_nacimiento DATE NOT NULL,
     genero VARCHAR(25) NOT NULL,
-    nacionalidad VARCHAR(100) NOT NULL,
-   
+    nacionalidad VARCHAR(100) NOT NULL
+
 );
 
 CREATE TABLE Correos (
@@ -154,8 +156,8 @@ CREATE TABLE Personal (
     cedula INT NOT NULL,
     id_especialidad INT,
     id_cargo INT,
-    
     id_jornada_laboral INT,
+
     FOREIGN KEY (id_especialidad) REFERENCES Especialidades(id_especialidad) ON DELETE SET NULL,
     FOREIGN KEY (id_cargo) REFERENCES Cargos(id_cargo) ON DELETE SET NULL,
     FOREIGN KEY (cedula) REFERENCES Persona(cedula) ON DELETE CASCADE,
@@ -330,7 +332,7 @@ CREATE TABLE Usuarios (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) UNIQUE,
     password VARCHAR(255),
-    cedula INT, -- Vincula el usuario con el empleado
+    cedula VARCHAR(50), -- Vincula el usuario con el empleado
     FOREIGN KEY (cedula) REFERENCES persona(cedula)
 );
 

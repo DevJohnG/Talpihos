@@ -1,6 +1,6 @@
 <?php
 
-require_once 'entities/usuario.php';
+require_once __DIR__ . '/../entities/usuario.php';
 
 class LoginController {
     public function login() {

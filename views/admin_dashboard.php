@@ -100,14 +100,15 @@
 
         /* Footer */
         footer {
-            background-color: #34495e;
-            color: #ecf0f1;
-            text-align: center;
-            padding: 1rem 0;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-        }
+    width: 100%;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    }
+    footer h4 {
+    margin: 5px 0;
+    }
 
         /* Responsive design */
         @media (max-width: 768px) {
@@ -138,20 +139,34 @@
     <main>
         <div class="container">
             <div class="dashboard-card">
-                <h2 class="dashboard-title">Bienvenido al Dashboard</h2>
+                <h2 class="dashboard-title">Bienvenido</h2>
                 <p class="dashboard-description">Selecciona una opción para gestionar</p>
                 <div class="dashboard-grid">
-                    <a href="agregar-direccion.html" class="dashboard-item">
+                    <a href="agregar-departamento.php" class="dashboard-item">
                         <svg class="dashboard-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                             <circle cx="12" cy="10" r="3"></circle>
                         </svg>
-                        Agregar Dirección
+                        Agregar Departamento
                     </a>
-                    <a href="agregar-especialidad.html" class="dashboard-item">
+                    <a href="agregar-areaMedica.php" class="dashboard-item">
+                        <svg class="dashboard-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                        Agregar Área Médica
+                    </a>
+                    <a href="agregar-subespecialidad.php" class="dashboard-item">
                         <svg class="dashboard-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="8" r="7"></circle>
-                            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                            <polyline points="8.21 13.89 7 23 12 2 7 23 15.79 13.88"></polyline>
+                        </svg>
+                        Agregar Sub Especialidad
+                    </a>
+                    <a href="agregar-especialidad.php" class="dashboard-item">
+                        <svg class="dashboard-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="8" r="7"></circle>
+                            <polyline points="8.21 13.89 7 23 12 2 7 23 15.79 13.88"></polyline>
                         </svg>
                         Agregar Especialidad
                     </a>
@@ -189,13 +204,6 @@
                         </svg>
                         Registrar Pacientes
                     </a>
-                    <a href="agregar-doctor.html" class="dashboard-item">
-                        <svg class="dashboard-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                        </svg>
-                        Agregar Doctor
-                    </a>
                     <a href="registrar_personal.php" class="dashboard-item">
                         <svg class="dashboard-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -219,10 +227,6 @@
         </div>
     </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Panel de Administración. Todos los derechos reservados.</p>
-        </div>
-    </footer>
+     <?php include 'Templates/footer.php'; ?>
 </body>
 </html>
