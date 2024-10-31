@@ -1,3 +1,51 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Conexión a la base de datos
+    require '../config/Database.php';
+
+    $cedula = $_POST['cedula'];
+    $nombre = $_POST['nombre'];
+    $apellido = $_POST['apellido'];
+    $fecha_nacimiento = $_POST['fecha_nacimiento'];
+    $sexo = $_POST['sexo'];
+    $correo = $_POST['correo'];
+    
+    $upload_dir = '../uploads/';
+    $foto_cedula_frontal = $upload_dir . basename($_FILES['cedula_frente']['name']);
+    $foto_cedula_trasera = $upload_dir . basename($_FILES['cedula_atras']['name']);
+    $foto_persona_con_cedula = $upload_dir . basename($_FILES['persona_cedula']['name']);
+
+    move_uploaded_file($_FILES['cedula_frente']['tmp_name'], $foto_cedula_frontal);
+    move_uploaded_file($_FILES['cedula_atras']['tmp_name'], $foto_cedula_trasera);
+    move_uploaded_file($_FILES['persona_cedula']['tmp_name'], $foto_persona_con_cedula);
+
+    try {
+        $db = new Database();
+        $query = "INSERT INTO PreRegistro 
+            (cedula, nombre, apellido, fecha_nacimiento, genero, correo, 
+            foto_cedula_frontal, foto_cedula_trasera, foto_persona_con_cedula) 
+            VALUES (:cedula,:nombre, :apellido, :fecha_nacimiento, :sexo, :correo, 
+            :foto_cedula_frontal, :foto_cedula_trasera, :foto_persona_con_cedula)";
+
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':cedula', $cedula);
+        $stmt->bindParam(':nombre', $nombre);
+        $stmt->bindParam(':apellido', $apellido);
+        $stmt->bindParam(':fecha_nacimiento', $fecha_nacimiento);
+        $stmt->bindParam(':sexo', $sexo);
+        $stmt->bindParam(':correo', $correo);
+        $stmt->bindParam(':foto_cedula_frontal', $foto_cedula_frontal);
+        $stmt->bindParam(':foto_cedula_trasera', $foto_cedula_trasera);
+        $stmt->bindParam(':foto_persona_con_cedula', $foto_persona_con_cedula);
+
+        $stmt->execute();
+        echo "Pre-registro enviado exitosamente.";
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -86,6 +134,19 @@
             transition: background-color 0.3s ease;
             margin-bottom: 10px;
         }
+        a{
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 10px; 
+        }
         button:hover {
             background-color: #3a7bc8;
         }
@@ -108,6 +169,10 @@
     <div class="container">
         <h1>Formulario de Pre-registro</h1>
         <form action="#" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+                <label for="cedula">Cédula:</label>
+                <input type="text" id="cedula" name="cedula" required>
+            </div>
             <div class="form-group">
                 <label for="nombre">Nombre:</label>
                 <input type="text" id="nombre" name="nombre" required>

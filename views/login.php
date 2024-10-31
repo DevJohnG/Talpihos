@@ -11,9 +11,11 @@
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             display: flex;
             justify-content: center;
+            flex-direction: column;
             align-items: center;
             height: 100vh;
-            margin: 0;
+            margin-bottom: 50px;
+        
         }
         .login-container {
             background-color: white;
@@ -81,6 +83,16 @@
             text-align: center;
             margin-top: 1rem;
         }
+        footer {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    }
+    footer h4 {
+    margin: 5px 0;
+    }
         .forgot-password a {
             color: #7f8c8d;
             text-decoration: none;
@@ -111,6 +123,7 @@
             <a href="#">¿Olvidaste tu contraseña?</a>
         </div>
     </div>
+    <?php include 'Templates/footer.php'; ?>
 </body>
 </html>
 

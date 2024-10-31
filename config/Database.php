@@ -6,6 +6,8 @@ class Database {
     private $password = ""; 
     private $conn;
 
+    private $pdo;
+
     public function getConnection() {
         $this->conn = null;
 
@@ -18,5 +20,19 @@ class Database {
 
         return $this->conn;
     }
+
+    public function __construct() {
+        try {
+            $this->pdo = new PDO("mysql:host=localhost;dbname=hospital", "root", "");
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            die("Error de conexión: " . $e->getMessage());
+        }
+    }
+
+    public function prepare($query) {
+        return $this->pdo->prepare($query);
+    }
+    
 }
 ?>

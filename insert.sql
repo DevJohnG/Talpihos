@@ -157,16 +157,7 @@ INSERT INTO Seguros (nombre_seguro, tipo_seguro, numero_poliza, id_paciente) VAL
 INSERT INTO Seguros (nombre_seguro, tipo_seguro, numero_poliza, id_paciente) VALUES ('Seguro Familiar', 'social', 'POL654321', 5); -- Paciente 5: Carlos López
 INSERT INTO Seguros (nombre_seguro, tipo_seguro, numero_poliza, id_paciente) VALUES ('Salud Premium', 'privado', 'POL159753', 6); -- Paciente 6: Laura Fernández
 
-
--- Insertar datos en la tabla Permisos
-INSERT INTO Permisos (nombre_permiso, tipo_permiso, descripcion) VALUES ('Acceso a Historia Clínica', 'lectura', 'Permite leer la historia clínica del paciente.');
-INSERT INTO Permisos (nombre_permiso, tipo_permiso, descripcion) VALUES ('Modificar Datos del Paciente', 'escritura', 'Permite actualizar la información del paciente en el sistema.');
-INSERT INTO Permisos (nombre_permiso, tipo_permiso, descripcion) VALUES ('Eliminar Registro de Paciente', 'eliminacion', 'Permite eliminar el registro de un paciente del sistema.');
-INSERT INTO Permisos (nombre_permiso, tipo_permiso, descripcion) VALUES ('Crear Nuevo Paciente', 'creacion', 'Permite agregar un nuevo paciente al sistema.');
-INSERT INTO Permisos (nombre_permiso, tipo_permiso, descripcion) VALUES ('Actualizar Datos de Seguro', 'actualizacion', 'Permite actualizar la información del seguro del paciente.');
-INSERT INTO Permisos (nombre_permiso, tipo_permiso, descripcion) VALUES ('Acceso Completo al Sistema', 'acceso_completo', 'Permite acceso total a todas las funcionalidades del sistema.');
-
-
+z
 
 
 -- Insertar datos en la tabla Usuarios

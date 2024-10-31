@@ -125,7 +125,7 @@ $result_roles = $conexion->query($query_roles);
         <label for="password">Contraseña:</label>
         <input type="password" id="password" name="password" required>
 
-        <label for="cedula">ID Personal:</label>
+        <label for="cedula">Cédula del Personal:</label>
         <input type="text" id="cedula" name="cedula" required>
 
         <label for="rol">Rol:</label>
