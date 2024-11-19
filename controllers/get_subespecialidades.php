@@ -1,5 +1,5 @@
 <?php
-require_once '../config/Database.php'; // Asegúrate de ajustar la ruta
+require_once '../config/Database.php';
 
 // Conectar a la base de datos
 $db = new Database();

@@ -3,6 +3,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Conexión a la base de datos
     require '../config/Database.php';
 
+    $nacionalidad = $_POST['nacionalidad'];
+    $tipo_sangre = $_POST['tipo_sangre'];
     $cedula = $_POST['cedula'];
     $nombre = $_POST['nombre'];
     $apellido = $_POST['apellido'];
@@ -22,9 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $db = new Database();
         $query = "INSERT INTO PreRegistro 
-            (cedula, nombre, apellido, fecha_nacimiento, genero, correo, 
+            (cedula, nombre, apellido, fecha_nacimiento, genero, nacionalidad, tipo_sangre, correo, 
             foto_cedula_frontal, foto_cedula_trasera, foto_persona_con_cedula) 
-            VALUES (:cedula,:nombre, :apellido, :fecha_nacimiento, :sexo, :correo, 
+            VALUES (:cedula,:nombre, :apellido, :fecha_nacimiento, :sexo, :nacionalidad, :tipo_sangre, :correo, 
             :foto_cedula_frontal, :foto_cedula_trasera, :foto_persona_con_cedula)";
 
         $stmt = $db->prepare($query);
@@ -33,6 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindParam(':apellido', $apellido);
         $stmt->bindParam(':fecha_nacimiento', $fecha_nacimiento);
         $stmt->bindParam(':sexo', $sexo);
+        $stmt->bindParam(':nacionalidad', $nacionalidad);
+        $stmt->bindParam(':tipo_sangre', $tipo_sangre);
         $stmt->bindParam(':correo', $correo);
         $stmt->bindParam(':foto_cedula_frontal', $foto_cedula_frontal);
         $stmt->bindParam(':foto_cedula_trasera', $foto_cedula_trasera);
@@ -194,6 +198,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <option value="otro">Otro</option>
                 </select>
             </div>
+    <div class="form-group">
+        <label for="tipo_sangre">Tipo de Sangre:</label>
+        <select id="tipo_sangre" name="tipo_sangre" required>
+            <option value="">Seleccione un tipo de sangre</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="nacionalidad">Nacionalidad:</label>
+        <select id="nacionalidad" name="nacionalidad" required>
+            <option value="">Seleccione una nacionalidad</option>
+            <option value="Argentina">Argentina</option>
+            <option value="Brasil">Brasil</option>
+            <option value="Chile">Chile</option>
+        </select>
+    </div>
+
             <div class="form-group">
                 <label for="correo">Correo Electrónico:</label>
                 <input type="email" id="correo" name="correo" required>
