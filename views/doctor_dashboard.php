@@ -1,3 +1,13 @@
+<?php
+
+session_start();
+
+
+if (!isset($_SESSION['usuario_id']) || $_SESSION['rol'] !== 'Doctor') {
+    header("Location: /views/login.php"); 
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -35,6 +45,7 @@
         }
         h1 {
             text-align: center;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
         }
         .dashboard-grid {
             display: grid;
@@ -78,6 +89,48 @@
         .dashboard-button:hover {
             background-color: #3a7bc8;
         }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            background-color: #fff;
+            color: #3498db;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .dropbtn:hover {
+            background-color: #ecf0f1;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            right: 0;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: #3498db;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ecf0f1;
+        }
         @media (max-width: 768px) {
             .dashboard-grid {
                 grid-template-columns: 1fr;
@@ -86,26 +139,23 @@
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Dashboard del Doctor</h1>
+<header>
+    <div class="container">
+        <div class="header-content" style="display: flex; align-items: center;">
+            <h1 style="flex-grow: 1;">PANEL DE DOCTOR</h1>
+            <div class="dropdown" style="margin-left: auto;">
+                <button class="dropbtn">Menu ▼</button>
+                <div class="dropdown-content">
+                    <a href="../index.php?action=logout">Cerrar Sesión</a>
+                    <a href="cambiar_contrasena.php">Cambiar Contraseña</a>
+                </div>
+            </div>
         </div>
-    </header>
+    </div>
+</header>
 
     <main class="container">
-        <div class="dashboard-grid">
-            <div class="dashboard-item">
-                <svg class="dashboard-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2a3 3 0 0 0-3 3v7h6V5a3 3 0 0 0-3-3z"></path>
-                    <path d="M19 10h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1"></path>
-                    <path d="M5 10H4a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h1"></path>
-                    <path d="M12 17v-5"></path>
-                    <path d="M9 21v-4"></path>
-                    <path d="M15 21v-4"></path>
-                </svg>
-                <h2 class="dashboard-title">Recetar Medicamentos</h2>
-                <a href="#" class="dashboard-button">Ir al formulario</a>
-            </div>
+        
 
             <div class="dashboard-item">
                 <svg class="dashboard-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -116,20 +166,10 @@
                     <polyline points="10 9 9 9 8 9"></polyline>
                 </svg>
                 <h2 class="dashboard-title">Realizar Historial Médico</h2>
-                <a href="#" class="dashboard-button">Ir al formulario</a>
+                <a href="historial_clinico.php" class="dashboard-button">Ir al formulario</a>
             </div>
 
-            <div class="dashboard-item">
-                <svg class="dashboard-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                    <polyline points="10 9 9 9 8 9"></polyline>
-                </svg>
-                <h2 class="dashboard-title">Ver Historial Médico</h2>
-                <a href="#" class="dashboard-button">Ver registros</a>
-            </div>
+<br>
 
             <div class="dashboard-item">
                 <svg class="dashboard-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -137,7 +177,7 @@
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
                 <h2 class="dashboard-title">Buscar Historial Médico</h2>
-                <a href="#" class="dashboard-button">Ir a búsqueda</a>
+                <a href="mostrar_historial.php" class="dashboard-button">Ir a búsqueda</a>
             </div>
         </div>
     </main>

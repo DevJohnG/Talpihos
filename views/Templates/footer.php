@@ -14,6 +14,7 @@
 <style>
     footer{
     background-color: #3498db;
+    color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 10px;
     display: flex;
@@ -28,5 +29,5 @@ footer div{
 footer div h4{
     padding: 0px 15px;
 }</style>
-    
+
 </footer>

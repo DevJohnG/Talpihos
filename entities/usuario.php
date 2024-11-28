@@ -1,7 +1,7 @@
 <?php
 require_once 'config/Database.php';
 
-class usuario {
+class Usuario {
     private $conn;
     private $table_name = "usuarios";
 
@@ -11,6 +11,7 @@ class usuario {
     }
 
     public function autenticar($username, $password) {
+        // Consulta para obtener el hash de la contraseña y el rol
         $query = "SELECT U.id_usuario, U.password, R.nombre_rol
                   FROM " . $this->table_name . " U
                   JOIN usuarios_roles UR ON U.id_usuario = UR.id_usuario
@@ -22,13 +23,14 @@ class usuario {
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
-        // Verificar la contraseña directamente (sin hash)
-        if ($user && $password === $user['password']) {
-            return $user;
+        // Verificar si el usuario existe y validar la contraseña hasheada
+        if ($user && password_verify($password, $user['password'])) {
+            return $user; // Retornar información del usuario si la autenticación es exitosa
         }
-        return null;
+        return null; 
     }
 }
+
 
 
 

@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['usuario_id']) || $_SESSION['rol'] !== 'SuperUsuario'&& $_SESSION['rol'] !== 'Recepcionista') {
+    header("Location: /views/login.php"); 
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,15 +19,51 @@
             box-sizing: border-box;
         }
         body {
+            padding:20px;
+            display: flex;
+            flex-direction: column;
+            background-image: url('../image/blurhospital.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             font-family: Arial, sans-serif;
             line-height: 1.6;
             background-color: #f4f4f4;
-            display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
         }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Centra los elementos dentro del header */
+            width: 100%;
+            color: white;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            padding: 20px 40px;
+            top: 0;
+            left: 0;
+            border-radius: 10px
+        }
+
+        header button {
+            padding: 10px 15px;
+            background-color: #fff;
+            font-weight: bold;
+            color: #2980b9;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s ease;
+            position: absolute;
+            left: 50px;
+        }
+        header button:hover {
+            background: darkgray;
+        }
+
         .container {
             background-color: #fff;
             padding: 30px;
@@ -27,12 +71,45 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 500px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
+
+        h1{
+            font-family: 'Arial', sans-serif;
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2), 0 0 25px rgba(0, 0, 0, 0.1);
         }
+
+        header:hover {
+        color: #fff;
+        background: linear-gradient(135deg, #2980b9, #3498db);
+        text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);}
+
+        .action-btn {
+         padding: 5px 10px;
+        background-color: #3498db;
+         font-weight: bold;
+        color: white;
+         border: none;
+        border-radius: 4px;
+         cursor: pointer;
+         font-size: 16px;
+         border: 0.5px solid #696969;
+         width: 170px;
+         height: 60px;
+}
+
+.action-btn:hover {
+    background-color: #D3D3D3;
+}
+
+        .bntsCont{
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+}
+
         form {
             display: grid;
             gap: 15px;
@@ -61,30 +138,21 @@
             background-repeat: no-repeat;
             background-position: right 10px center;
         }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-        }
+      
     </style>
 </head>
 <body>
+<header>
+    <button onclick="location.href='admin_dashboard.php'">← Regresar</button>
+    <h1>Registro de Personas</h1>
+
+</header>
+
+<br>
+<br>
+
     <div class="container">
-        <h1>Registro de Personas</h1>
-        <form action="../controllers/Registro_persona.php" method="POST">
+        <form action="../controllers/crear_personaController.php" method="POST">
             <div>
                 <label for="cedula">Cédula:</label>
                 <input type="text" id="cedula" name="cedula" required>
@@ -114,8 +182,12 @@
                 <label for="nacionalidad">Nacionalidad:</label>
                 <input type="text" id="nacionalidad" name="nacionalidad" required>
             </div>
-            <button type="submit">Registrar Persona</button>
+            <button style="width:100%;" class="action-btn" type="action-btn">REGISTRAR</button>
         </form>
     </div>
+    
+    <br>
+    <?php require 'templates/footer.php'; ?>
+
 </body>
 </html>

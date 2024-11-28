@@ -2,22 +2,88 @@
 
 require_once '../config/Database.php';
 
-$database = new Database();
-$db = $database->getConnection();
+class DepartamentoController {
+    private $db;
 
+    public function __construct() {
+        $database = new Database();
+        $this->db = $database->getConnection();
+    }
+
+    // agregar
+    public function crearDepartamento($nombre, $descripcion) {
+        $query = "INSERT INTO Departamentos (nombre_departamento, descripcion_departamento) VALUES (:nombre, :descripcion)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':nombre', $nombre);
+        $stmt->bindParam(':descripcion', $descripcion);
+
+        return $stmt->execute();
+    }
+
+    // busqueda
+    public function obtenerDepartamentos() {
+        $query = "SELECT id_departamento, nombre_departamento, descripcion_departamento FROM Departamentos";
+        $stmt = $this->db->query($query);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // update
+    public function actualizarDepartamento($id, $nombre, $descripcion) {
+        $query = "UPDATE Departamentos SET nombre_departamento = :nombre, descripcion_departamento = :descripcion WHERE id_departamento = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':nombre', $nombre);
+        $stmt->bindParam(':descripcion', $descripcion);
+
+        return $stmt->execute();
+    }
+
+    // eliminar
+    public function eliminarDepartamento($id) {
+        $query = "DELETE FROM Departamentos WHERE id_departamento = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id);
+
+        return $stmt->execute();
+    }
+}
+
+//solicitudes
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombre_departamento = $_POST['nombre_departamento'];
-    $descripcion_departamento = $_POST['descripcion_departamento'];
+    $action = $_POST['action'];
+    $controller = new DepartamentoController();
 
-    $query = "INSERT INTO Departamentos (nombre_departamento, descripcion_departamento) VALUES (:nombre, :descripcion)";
-    $stmt = $db->prepare($query);
-    $stmt->bindParam(':nombre', $nombre_departamento);
-    $stmt->bindParam(':descripcion', $descripcion_departamento);
+    switch ($action) {
+        case 'crear':
+            $nombre = $_POST['nombre_departamento'];
+            $descripcion = $_POST['descripcion_departamento'];
+            if ($controller->crearDepartamento($nombre, $descripcion)) {
+                echo "Departamento creado con éxito.";
+            } else {
+                echo "Error al crear el departamento.";
+            }
+            break;
 
-    if ($stmt->execute()) {
-        echo "Departamento registrado correctamente.";
-    } else {
-        echo "Error al registrar el departamento.";
+        case 'actualizar':
+            $id = $_POST['id_departamento'];
+            $nombre = $_POST['nombre_departamento'];
+            $descripcion = $_POST['descripcion_departamento'];
+            if ($controller->actualizarDepartamento($id, $nombre, $descripcion)) {
+                echo "Departamento actualizado con éxito.";
+            } else {
+                echo "Error al actualizar el departamento.";
+            }
+            break;
+
+        case 'eliminar':
+            $id = $_POST['id_departamento'];
+            if ($controller->eliminarDepartamento($id)) {
+                echo "Departamento eliminado con éxito.";
+            } else {
+                echo "Error al eliminar el departamento.";
+            }
+            break;
     }
 }
 ?>

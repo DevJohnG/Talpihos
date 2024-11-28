@@ -1,3 +1,13 @@
+<?php
+
+session_start();
+
+
+if (!isset($_SESSION['usuario_id']) || $_SESSION['rol'] !== 'Recepcionista') {
+    header("Location: /views/login.php"); 
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -90,6 +100,9 @@
     <header>
         <div class="container">
             <h1>Dashboard de Recepcionista</h1>
+            <form method="POST" action="../index.php?action=logout">
+                <button type="submit" class="logout-btn">Cerrar Sesión</button>
+                </form>
         </div>
     </header>
 
@@ -101,7 +114,7 @@
                     <circle cx="12" cy="7" r="4"></circle>
                 </svg>
                 <h2 class="dashboard-title">Registrar Personas</h2>
-                <a href="#" class="dashboard-button">Ir al formulario</a>
+                <a href="registro_personas.php" class="dashboard-button">Ir al formulario</a>
             </div>
 
             <div class="dashboard-item">
@@ -113,7 +126,7 @@
                     <path d="M12 9v9"></path>
                 </svg>
                 <h2 class="dashboard-title">Registrar Pacientes</h2>
-                <a href="#" class="dashboard-button">Ir al formulario</a>
+                <a href="registro_paciente.php" class="dashboard-button">Ir al formulario</a>
             </div>
 
             <div class="dashboard-item">

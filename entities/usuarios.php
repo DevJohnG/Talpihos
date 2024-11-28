@@ -4,10 +4,11 @@ class Usuario {
     private $username;
     private $password;
     private $cedula;
-    private $conn;  // Conexión a la base de datos
-    private $table = 'usuarios'; // Nombre de la tabla de usuarios
+    private $email;
+    private $conn; 
+    private $table = 'usuarios'; 
 
-    // Constructor que acepta la conexión a la base de datos
+    
     public function __construct($db) {
         $this->conn = $db;
     }

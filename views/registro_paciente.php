@@ -1,3 +1,21 @@
+<?php
+require_once '../config/Database.php'; 
+
+
+session_start();
+
+if (!isset($_SESSION['usuario_id']) || $_SESSION['rol'] !== 'SuperUsuario'&& $_SESSION['rol'] !== 'Recepcionista') {
+    header("Location: /views/login.php"); 
+    exit();
+}
+$database = new Database();
+$db = $database->getConnection();
+
+
+$tipo_sangre_query = $db->query("SELECT id_tipo_sangre, tipo_sangre FROM tiposdesangre");
+$tipo_sangre = $tipo_sangre_query->fetchAll(PDO::FETCH_ASSOC);
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -17,32 +35,105 @@
             box-sizing: border-box;
         }
         body {
+            padding:20px;
+            display: flex;
+            flex-direction: column;
+            background-image: url('../image/blurhospital.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             font-family: Arial, sans-serif;
             line-height: 1.6;
-            background-color: var(--secondary-color);
-            color: var(--text-color);
-            display: flex;
+            background-color: #f4f4f4;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
         }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Centra los elementos dentro del header */
+            width: 100%;
+            color: white;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            padding: 20px 40px;
+            top: 0;
+            left: 0;
+            border-radius: 10px
+        }
+
+        .btnHeader {
+            padding: 10px 15px;
+            background-color: #fff;
+            font-weight: bold;
+            color: #2980b9;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s ease;
+            position: absolute;
+            left: 50px;
+        }
+        header button:hover {
+            background: darkgray;
+        }
+
+        header:hover {
+        color: #fff;
+        background: linear-gradient(135deg, #2980b9, #3498db);
+        text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);}
+
         .container {
             background-color: #fff;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: var(--primary-color);
+            font-family: 'Arial', sans-serif;
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2), 0 0 25px rgba(0, 0, 0, 0.1);
         }
         .form-group {
             margin-bottom: 20px;
         }
+
+        .action-btn {
+         padding: 5px 10px;
+        background-color: #3498db;
+         font-weight: bold;
+        color: white;
+         border: none;
+        border-radius: 4px;
+         cursor: pointer;
+         font-size: 16px;
+         border: 0.5px solid #696969;
+         width: 170px;
+         height: 60px;
+}
+
+        .action-btn:hover {
+         background-color: #D3D3D3;
+        }
+
+        .bntsCont{
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+}
+
+form {
+            display: grid;
+            gap: 15px;
+        }
+
         label {
             display: block;
             margin-bottom: 5px;
@@ -60,7 +151,7 @@
             border-color: var(--primary-color);
             box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
         }
-        button {
+        .submit {
             display: block;
             width: 100%;
             padding: 12px;
@@ -83,8 +174,16 @@
     </style>
 </head>
 <body>
+
+<header>
+    <button class="btnHeader" onclick="location.href='admin_dashboard.php'">← Regresar</button>
+    <h1>Registro de Paciente</h1>
+
+</header>
+
+<br>
+
     <div class="container">
-        <h1>Registro de Paciente</h1>
         <form action="../controllers/Registro_pacientes.php" method="POST">
             <div class="form-group">
                 <label for="cedula">Cédula:</label>
@@ -94,18 +193,17 @@
                 <label for="id_tipo_sangre">Tipo de Sangre:</label>
                 <select id="id_tipo_sangre" name="id_tipo_sangre">
                     <option value="">Seleccione el tipo de sangre</option>
-                    <option value="1">A+</option>
-                    <option value="2">A-</option>
-                    <option value="3">B+</option>
-                    <option value="4">B-</option>
-                    <option value="5">AB+</option>
-                    <option value="6">AB-</option>
-                    <option value="7">O+</option>
-                    <option value="8">O-</option>
-                </select>
+                    <?php foreach ($tipo_sangre as $tipos_sangre): ?>
+            <option value="<?= $tipos_sangre['id_tipo_sangre']; ?>"><?= $tipos_sangre['tipo_sangre']; ?></option>
+        <?php endforeach; ?>
+               </select>
             </div>
-            <button type="submit">Registrar Paciente</button>
+            <button class="submit" type="submit">Registrar Paciente</button>
         </form>
     </div>
+
+    <br>
+    <?php require 'templates/footer.php'; ?>
+
 </body>
 </html>

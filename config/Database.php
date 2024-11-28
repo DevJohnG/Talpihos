@@ -1,12 +1,10 @@
 <?php
 class Database {
     private $host = "localhost";
-    private $db_name = "hospital";
+    private $db_name = "Hospital";
     private $username = "root"; 
     private $password = ""; 
     private $conn;
-
-    private $pdo;
 
     public function getConnection() {
         $this->conn = null;
@@ -20,7 +18,6 @@ class Database {
 
         return $this->conn;
     }
-
     public function __construct() {
         try {
             $this->pdo = new PDO("mysql:host=localhost;dbname=hospital", "root", "");
@@ -33,6 +30,5 @@ class Database {
     public function prepare($query) {
         return $this->pdo->prepare($query);
     }
-    
 }
 ?>

@@ -1,11 +1,11 @@
 <?php
-require_once '../config/Database.php';
+require_once '../config/Database.php'; 
 
 // Conectar a la base de datos
 $db = new Database();
 $conn = $db->getConnection();
 
-// Verificar si se ha enviado id_area_medica mediante GET
+
 if (isset($_GET['id_area_medica'])) {
     $id_area_medica = $_GET['id_area_medica'];
 
@@ -17,6 +17,6 @@ if (isset($_GET['id_area_medica'])) {
     $subespecialidades = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($subespecialidades);
 } else {
-    echo json_encode([]); // En caso de no encontrar el id_area_medica
+    echo json_encode([]);
 }
 ?>

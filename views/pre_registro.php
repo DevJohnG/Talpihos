@@ -1,17 +1,33 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Conexión a la base de datos
-    require '../config/Database.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
+require '../vendor/autoload.php';
+require '../config/Database.php';
+
+$tipo_sangre = []; // Inicializamos la variable para evitar errores si no hay POST
+
+// Consultar los tipos de sangre desde la base de datos
+try {
+    $database = new Database();
+    $db = $database->getConnection();
+    $tipo_sangre_query = $db->query("SELECT id_tipo_sangre, tipo_sangre FROM tiposdesangre");
+    $tipo_sangre = $tipo_sangre_query->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "Error al conectar con la base de datos: " . $e->getMessage();
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nacionalidad = $_POST['nacionalidad'];
-    $tipo_sangre = $_POST['tipo_sangre'];
+    $tipo_sangre_id = $_POST['id_tipo_sangre'];
     $cedula = $_POST['cedula'];
     $nombre = $_POST['nombre'];
     $apellido = $_POST['apellido'];
     $fecha_nacimiento = $_POST['fecha_nacimiento'];
     $sexo = $_POST['sexo'];
     $correo = $_POST['correo'];
-    
+
     $upload_dir = '../uploads/';
     $foto_cedula_frontal = $upload_dir . basename($_FILES['cedula_frente']['name']);
     $foto_cedula_trasera = $upload_dir . basename($_FILES['cedula_atras']['name']);
@@ -22,13 +38,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     move_uploaded_file($_FILES['persona_cedula']['tmp_name'], $foto_persona_con_cedula);
 
     try {
-        $db = new Database();
         $query = "INSERT INTO PreRegistro 
             (cedula, nombre, apellido, fecha_nacimiento, genero, nacionalidad, tipo_sangre, correo, 
             foto_cedula_frontal, foto_cedula_trasera, foto_persona_con_cedula) 
-            VALUES (:cedula,:nombre, :apellido, :fecha_nacimiento, :sexo, :nacionalidad, :tipo_sangre, :correo, 
+            VALUES (:cedula, :nombre, :apellido, :fecha_nacimiento, :sexo, :nacionalidad, :tipo_sangre, :correo, 
             :foto_cedula_frontal, :foto_cedula_trasera, :foto_persona_con_cedula)";
-
         $stmt = $db->prepare($query);
         $stmt->bindParam(':cedula', $cedula);
         $stmt->bindParam(':nombre', $nombre);
@@ -36,20 +50,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindParam(':fecha_nacimiento', $fecha_nacimiento);
         $stmt->bindParam(':sexo', $sexo);
         $stmt->bindParam(':nacionalidad', $nacionalidad);
-        $stmt->bindParam(':tipo_sangre', $tipo_sangre);
+        $stmt->bindParam(':tipo_sangre', $tipo_sangre_id);
         $stmt->bindParam(':correo', $correo);
         $stmt->bindParam(':foto_cedula_frontal', $foto_cedula_frontal);
         $stmt->bindParam(':foto_cedula_trasera', $foto_cedula_trasera);
         $stmt->bindParam(':foto_persona_con_cedula', $foto_persona_con_cedula);
-
         $stmt->execute();
-        echo "Pre-registro enviado exitosamente.";
+
+        // Enviar correo de confirmación con PHPMailer
+        $mail = new PHPMailer(true);
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'talpihosclinic@gmail.com'; 
+        $mail->Password = 'xtogjorlypqnpmuq'; 
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+
+        $mail->setFrom('tu_correo@gmail.com', 'Hospital');
+        $mail->addAddress($correo);
+
+        $mail->isHTML(true);
+        $mail->Subject = 'Confirmación de Pre-registro';
+        $mail->Body = "Hola $nombre,<br><br>Gracias por completar el formulario de pre-registro. Hemos recibido tus datos exitosamente.<br><br>Saludos,<br>";
+
+        $mail->send();
+        echo "Pre-registro enviado exitosamente y correo de confirmación enviado.";
     } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
+        echo "Error en la base de datos: " . $e->getMessage();
+    } catch (Exception $e) {
+        echo "Error al enviar el correo: {$mail->ErrorInfo}";
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -198,28 +231,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <option value="otro">Otro</option>
                 </select>
             </div>
-    <div class="form-group">
-        <label for="tipo_sangre">Tipo de Sangre:</label>
-        <select id="tipo_sangre" name="tipo_sangre" required>
-            <option value="">Seleccione un tipo de sangre</option>
-            <option value="A+">A+</option>
-            <option value="A-">A-</option>
-            <option value="B+">B+</option>
-            <option value="B-">B-</option>
-            <option value="AB+">AB+</option>
-            <option value="AB-">AB-</option>
-            <option value="O+">O+</option>
-            <option value="O-">O-</option>
-        </select>
-    </div>
+            <div class="form-group">
+                <label for="id_tipo_sangre">Tipo de Sangre:</label>
+                <select id="id_tipo_sangre" name="id_tipo_sangre">
+                    <option value="">Seleccione el tipo de sangre</option>
+                    <?php foreach ($tipo_sangre as $tipos_sangre): ?>
+            <option value="<?= $tipos_sangre['id_tipo_sangre']; ?>"><?= $tipos_sangre['tipo_sangre']; ?></option>
+        <?php endforeach; ?>
+               </select>
+            </div>
 
     <div class="form-group">
         <label for="nacionalidad">Nacionalidad:</label>
         <select id="nacionalidad" name="nacionalidad" required>
             <option value="">Seleccione una nacionalidad</option>
-            <option value="Argentina">Argentina</option>
-            <option value="Brasil">Brasil</option>
-            <option value="Chile">Chile</option>
+            <option value="Panameña">Panameña</option>
+            <option value="Panameño">Panameño</option>
         </select>
     </div>
 

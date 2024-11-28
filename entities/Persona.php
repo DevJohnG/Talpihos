@@ -2,7 +2,7 @@
 require_once '../config/Database.php';
 
 class Persona {
-    private $idPersona;
+    private $db;
     private $cedula;
     private $nombre;
     private $apellido;
@@ -10,7 +10,8 @@ class Persona {
     private $genero;
     private $nacionalidad;
 
-    public function __construct($cedula, $nombre, $apellido, $fechaNacimiento, $genero, $nacionalidad) {
+    public function __construct($db, $cedula, $nombre, $apellido, $fechaNacimiento, $genero, $nacionalidad) {
+        $this->db = $db;
         $this->cedula = $cedula;
         $this->nombre = $nombre;
         $this->apellido = $apellido;
@@ -20,13 +21,19 @@ class Persona {
     }
 
     public function registrar() {
-        $database = new Database();
-        $conn = $database->getConnection();
+        $checkQuery = "SELECT cedula FROM persona WHERE cedula = :cedula";
+        $checkStmt = $this->db->prepare($checkQuery);
+        $checkStmt->bindParam(':cedula', $this->cedula);
+        $checkStmt->execute();
 
-        $sql = "INSERT INTO Persona (cedula, nombre, apellido, fecha_nacimiento, genero, nacionalidad) 
-                VALUES (:cedula, :nombre, :apellido, :fecha_nacimiento, :genero, :nacionalidad)";
-        
-        $stmt = $conn->prepare($sql);
+        if ($checkStmt->rowCount() > 0) {
+            throw new Exception("La cédula ya está registrada.");
+        }
+
+        // Insertar la nueva persona
+        $query = "INSERT INTO persona (cedula, nombre, apellido, fecha_nacimiento, genero, nacionalidad) 
+                  VALUES (:cedula, :nombre, :apellido, :fecha_nacimiento, :genero, :nacionalidad)";
+        $stmt = $this->db->prepare($query);
         $stmt->bindParam(':cedula', $this->cedula);
         $stmt->bindParam(':nombre', $this->nombre);
         $stmt->bindParam(':apellido', $this->apellido);
@@ -36,5 +43,5 @@ class Persona {
 
         return $stmt->execute();
     }
-    }
+}
 ?>
